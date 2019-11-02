@@ -15,7 +15,7 @@ const Header = ({ currentUser }) => (
             <Link className='option' to='/entries'>7 DAYS</Link>
             <Link className='option' to='/entries'>30 DAYS</Link>
             <Link className='option' to='/months'>12 MONTHS</Link>
-            <Link className='option' to='/'>LOGOUT</Link>
+            <Link className='option' to='/login'>LOGIN</Link>
             {/* {
                 currentUser ?
                     <div className='option' onClick={() => auth.signOut()}>
