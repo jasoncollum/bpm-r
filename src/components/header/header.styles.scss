@@ -1,0 +1,26 @@
+.header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+
+  .options {
+    // width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .option {
+      padding: 10px 10px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+  }
+}
+
+.heart-outline {
+    font-size: 18px;
+    color: #676c72;
+}
