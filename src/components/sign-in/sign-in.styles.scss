@@ -1,0 +1,23 @@
+.sign-in {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    
+    .title {
+        margin: 10px 0;
+    }
+
+    .button {
+        margin-bottom: 35px;
+    }
+
+    span {
+        font-size: 18px;
+    }
+
+    .sign-up-message {
+        color: grey;
+    }
+}

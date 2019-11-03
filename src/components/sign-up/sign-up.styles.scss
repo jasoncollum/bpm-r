@@ -1,0 +1,21 @@
+.sign-up {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    justify-content: center;
+    margin: 0 auto;
+
+    .title {
+        margin: 10px 0;
+    }
+
+    span {
+        font-size: 18px;
+    }
+
+    .login-message {
+        font-size: 18px;
+        color: grey;
+        margin-top: 30px;
+    }
+}
