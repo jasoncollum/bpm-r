@@ -1,23 +1,21 @@
-.sign-in {
-    width: 300px;
+.sign-up {
     display: flex;
     flex-direction: column;
+    width: 300px;
     justify-content: center;
     margin: 0 auto;
-    
+
     .title {
         margin: 10px 0;
-    }
-
-    .button {
-        margin-bottom: 35px;
     }
 
     span {
         font-size: 18px;
     }
 
-    .sign-up-message {
+    .login-message {
+        font-size: 18px;
         color: grey;
+        margin-top: 30px;
     }
 }
