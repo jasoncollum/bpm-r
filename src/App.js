@@ -7,7 +7,7 @@ import Header from './components/header/header.component';
 
 import HomePage from './pages/homepage/homepage.component';
 import SignIn from './components/sign-in/sign-in.component';
-// import SignUp from './components/sign-up/sign-up.component';
+import SignUp from './components/sign-up/sign-up.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -57,7 +57,7 @@ class App extends React.Component {
                   <SignIn />
                 )}
           />
-          {/* <Route path='/signup' component={SignUp} /> */}
+          <Route path='/signup' component={SignUp} />
         </Switch>
       </div>
     );
