@@ -3,10 +3,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 
   .options {
-    // width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -16,6 +15,10 @@
       padding: 10px 10px;
       cursor: pointer;
       font-weight: 500;
+      text-decoration: none;
+    }
+    .option:hover {
+      color: #4582EC;
     }
   }
 }

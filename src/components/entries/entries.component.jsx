@@ -5,7 +5,7 @@ import './entries.styles.scss';
 
 const Entries = () => (
     <div className='entries-container'>
-        <Table>
+        <Table className='table'>
             <thead>
                 <tr>
                     <th>Date</th>
@@ -21,10 +21,22 @@ const Entries = () => (
                     <td>116/78</td>
                     <td>68</td>
                     <td>140</td>
-                    {/* <td><i class='fas fa-pencil-alt'></i></td> */}
+                    <td><i class='fas fa-pencil-alt pencil-icon'></i></td>
                 </tr>
                 <tr>
-                    <td className='table-note'>
+                    <td className='table-note' colspan="12">
+                        Took normal morning meds and walked three miles.
+                    </td>
+                </tr>
+                <tr>
+                    <td>11/10/2019 3:57 PM</td>
+                    <td>116/78</td>
+                    <td>68</td>
+                    <td>140</td>
+                    <td><i class='fas fa-pencil-alt pencil-icon'></i></td>
+                </tr>
+                <tr>
+                    <td className='table-note' colspan="12">
                         Took normal morning meds.
                     </td>
                 </tr>
