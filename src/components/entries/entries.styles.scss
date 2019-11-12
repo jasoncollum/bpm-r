@@ -1,0 +1,25 @@
+.entries-container {
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    text-align: left;
+}
+
+.table-note {
+    color: grey;
+    border-top: none !important;
+    padding-top: 0px !important;
+}
+
+.pencil-icon {
+    color: #f0ad4e;
+}
+
+@media (min-width: 576px) {
+    .table {
+        max-width: 500px;
+        margin: 0 20%;
+    }
+}

@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from './redux/store';
 
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
