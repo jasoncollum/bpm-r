@@ -49,12 +49,12 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
-          <Route exact path='/entries' component={Entries} />
+          <Route exact path='/entries' component={Entries} user={this.props.currentUser} />
           <Route
             exact path='/signin'
             render={() =>
               this.props.currentUser ? (
-                <Redirect to='/' />
+                <Redirect to='/entries' />
               ) : (
                   <SignIn />
                 )}

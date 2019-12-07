@@ -34,7 +34,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         }
     }
 
-    console.log(userAuth);
+    // console.log(userAuth);
     return userRef;
 }
 
