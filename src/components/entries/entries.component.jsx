@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
+// import { connect } from 'react-redux';
+// import { createStructuredSelector } from 'reselect';
 
 import { firestore } from '../../firebase/firebase.utils';
+// import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import './entries.styles.scss';
 
@@ -34,7 +37,6 @@ const Entries = () => {
             const data = await firestore.collection(`users/${userId}/entries`)
                 .orderBy("date", "asc")
                 .get();
-            console.log("DATA", data)
             setEntries(data.docs.map(doc => doc.data()));
         }
         fetchData("zahKXV2wMHeJbFPbbWXLfS9wTT32");
@@ -76,5 +78,12 @@ const Entries = () => {
         </div>
     )
 }
+
+
+// const mapStateToProps = createStructuredSelector({
+//     currentUser: selectCurrentUser
+// });
+
+// export default connect(mapStateToProps)(Entries);
 
 export default Entries;
