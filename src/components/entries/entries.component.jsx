@@ -29,8 +29,9 @@ import './entries.styles.scss';
 //     }
 // ]
 
-const Entries = () => {
+const Entries = (props) => {
     const [entries, setEntries] = useState([]);
+    const activeUser = props.user;
 
     useEffect(() => {
         const fetchData = async (userId) => {
@@ -39,7 +40,7 @@ const Entries = () => {
                 .get();
             setEntries(data.docs.map(doc => doc.data()));
         }
-        fetchData("zahKXV2wMHeJbFPbbWXLfS9wTT32");
+        fetchData(activeUser.id);
     }, [])
 
     return (
