@@ -43,6 +43,8 @@ const Entries = (props) => {
         fetchData(activeUser.id);
     }, [])
 
+    // const filteredEntries = entries.filter(entry => entry.date > "12/1/2019 2:00 PM");
+
     return (
         <div className="entries-container">
             <Table className='table'>
