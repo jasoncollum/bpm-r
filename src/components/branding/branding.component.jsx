@@ -3,7 +3,7 @@ import React from 'react';
 import './branding.styles.scss';
 
 const Branding = () => (
-    <div>
+    <div className="branding-container">
         <h1 className='branding-bpm'>bpm</h1>
         <div className='icon-div'>
             <i className='fas fa-heart heart icon'></i>
