@@ -31,17 +31,17 @@ import './entries.styles.scss';
 
 const Entries = (props) => {
     const [entries, setEntries] = useState([]);
-    const activeUser = props.user;
+    // const activeUser = props.user;
 
-    useEffect(() => {
-        const fetchData = async (userId) => {
-            const data = await firestore.collection(`users/${userId}/entries`)
-                .orderBy("date", "asc")
-                .get();
-            setEntries(data.docs.map(doc => doc.data()));
-        }
-        fetchData(activeUser.id);
-    }, [])
+    // useEffect(() => {
+    //     const fetchData = async (userId) => {
+    //         const data = await firestore.collection(`users/${userId}/entries`)
+    //             .orderBy("date", "asc")
+    //             .get();
+    //         setEntries(data.docs.map(doc => doc.data()));
+    //     }
+    //     fetchData(activeUser.id);
+    // }, [])
 
     // const filteredEntries = entries.filter(entry => entry.date > "12/1/2019 2:00 PM");
 
