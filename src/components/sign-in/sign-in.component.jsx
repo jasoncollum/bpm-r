@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
@@ -8,7 +8,7 @@ import { auth } from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
 
-class SignIn extends React.Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
 

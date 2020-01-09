@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table } from 'reactstrap';
 // import { connect } from 'react-redux';
 // import { createStructuredSelector } from 'reselect';
 
 import { firestore } from '../../firebase/firebase.utils';
 // import { selectCurrentUser } from '../../redux/user/user.selectors';
-
+import CurrentUserContext from '../../contexts/current-user.context';
 import './entries.styles.scss';
 
 // const entries = [
@@ -31,6 +31,8 @@ import './entries.styles.scss';
 
 const Entries = (props) => {
     const [entries, setEntries] = useState([]);
+    const currentUser = useContext(CurrentUserContext);
+    console.log("ENTRIES-USER::", currentUser);
     // const activeUser = props.user;
 
     // useEffect(() => {

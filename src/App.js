@@ -59,23 +59,24 @@ class App extends Component {
       <div className="App" >
         <CurrentUserContext.Provider value={this.state.currentUser}>
           <Header />
+
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route exact path='/entries'
+              // component={Entries} 
+              render={() => <Entries />} />
+            <Route
+              exact path='/signin'
+              render={() =>
+                this.state.currentUser ? (
+                  <Redirect to='/entries' />
+                ) : (
+                    <SignIn />
+                  )}
+            />
+            <Route path='/signup' component={SignUp} />
+          </Switch>
         </CurrentUserContext.Provider>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/entries'
-            // component={Entries} 
-            render={(props) => <Entries {...props} user={this.props.currentUser} />} />
-          <Route
-            exact path='/signin'
-            render={() =>
-              this.props.currentUser ? (
-                <Redirect to='/entries' />
-              ) : (
-                  <SignIn />
-                )}
-          />
-          <Route path='/signup' component={SignUp} />
-        </Switch>
       </div>
     );
   }
