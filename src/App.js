@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+// import { connect } from 'react-redux';
+// import { createStructuredSelector } from 'reselect';
 
 import Header from './components/header/header.component';
 
@@ -30,24 +30,38 @@ class App extends Component {
 
   unsubscribeFromAuth = null;
 
+  componentWillMount() {
+    localStorage.getItem('currentUser') && this.setState({
+      currentUser: JSON.parse(localStorage.getItem('currentUser'))
+    })
+  }
+
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    if (!localStorage.getItem('currentUser')) {
+      this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+        if (userAuth) {
+          const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
+          userRef.onSnapshot(snapShot => {
+            this.setState({
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              }
+            });
           });
-        });
-      }
+        }
 
-      this.setState(userAuth);
+        this.setState(userAuth);
 
-    });
+      });
+    } else {
+      console.log('Using data from localStorage')
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
   }
 
   componentWillUnmount() {
