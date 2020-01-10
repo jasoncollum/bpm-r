@@ -12,9 +12,6 @@ import SignUp from './components/sign-up/sign-up.component';
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
-// import { setCurrentUser } from './redux/user/user.actions';
-// import { selectCurrentUser } from './redux/user/user.selectors';
-
 import CurrentUserContext from './contexts/current-user.context';
 
 import './App.css';
@@ -30,6 +27,7 @@ class App extends Component {
 
   unsubscribeFromAuth = null;
 
+  // address renaming
   componentWillMount() {
     localStorage.getItem('currentUser') && this.setState({
       currentUser: JSON.parse(localStorage.getItem('currentUser'))
@@ -60,6 +58,7 @@ class App extends Component {
     }
   }
 
+  // address renaming
   componentWillUpdate(nextProps, nextState) {
     localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
   }
@@ -95,18 +94,5 @@ class App extends Component {
     );
   }
 }
-
-// const mapStateToProps = createStructuredSelector({
-//   currentUser: selectCurrentUser
-// })
-
-// const mapDispatchToProps = dispatch => ({
-//   setCurrentUser: user => dispatch(setCurrentUser(user))
-// })
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(App);
 
 export default App;
