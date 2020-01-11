@@ -8,7 +8,7 @@ import Branding from '../../components/branding/branding.component';
 
 import './homepage.styles.scss';
 
-const HomePage = () => {
+const HomePage = ({ signUserOut }) => {
     const currentUser = useContext(CurrentUserContext)
 
     return (
@@ -19,12 +19,14 @@ const HomePage = () => {
                 <>
                     <h3 className='homepage-greeting'>Hello, {currentUser.displayName}</h3>
                     <span className='homepage-option'
-                        onClick={() => auth.signOut()}>
+                        onClick={() => signUserOut()}>
                         SIGN OUT
                     </span>
                 </>
             ) : (
-                    <Link className='homepage-option'>SIGN IN</Link>
+                    <Link className='homepage-option' to='/signin'>
+                        SIGN IN
+                        </Link>
                 )
             }
 

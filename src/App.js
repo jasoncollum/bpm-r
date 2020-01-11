@@ -21,6 +21,14 @@ class App extends Component {
     this.state = {
       currentUser: null
     };
+
+    this.signUserOut = this.signUserOut.bind(this);
+  }
+
+  signUserOut() {
+    auth.signOut();
+    localStorage.removeItem('currentUser');
+    this.setState({ currentUser: null });
   }
 
   unsubscribeFromAuth = null;
@@ -57,9 +65,9 @@ class App extends Component {
   }
 
   // address renaming
-  componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-  }
+  // componentWillUpdate(nextProps, nextState) {
+  //   localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
+  // }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -72,10 +80,17 @@ class App extends Component {
           <Header />
 
           <Switch>
-            <Route exact path='/' component={HomePage} />
+            <Route exact path='/'
+              render={() => <HomePage signUserOut={this.signUserOut} />}
+            />
             <Route exact path='/entries'
-              // component={Entries} 
-              render={() => <Entries />} />
+              render={() =>
+                !this.state.currentUser ? (
+                  <Redirect to='/signin' />
+                ) : (
+                    <Entries />
+                  )}
+            />
             <Route
               exact path='/signin'
               render={() =>
@@ -85,7 +100,14 @@ class App extends Component {
                     <SignIn />
                   )}
             />
-            <Route path='/signup' component={SignUp} />
+            <Route path='/signup'
+              render={() =>
+                this.state.currentUser ? (
+                  <Redirect to='/entries' />
+                ) : (
+                    <SignUp />
+                  )}
+            />
           </Switch>
         </CurrentUserContext.Provider>
       </div>

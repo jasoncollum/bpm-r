@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-import { auth } from '../../firebase/firebase.utils';
 import CurrentUserContext from '../../contexts/current-user.context';
 
 import './header.styles.scss';
 
-const Header = () => {
+const Header = ({ signUserOut }) => {
     const currentUser = useContext(CurrentUserContext);
-    console.log("HEADER-USER::", currentUser)
+
     return (
         <div className='header'>
             <div className='options'>
@@ -20,8 +19,10 @@ const Header = () => {
                 <Link className='option' to='/entries'>30 DAYS</Link>
                 <Link className='option' to='/months'>12 MONTHS</Link>
                 {currentUser ? (
-                    <div className='option' onClick={() => auth.signOut()}>
-                        <span className='fas fa-plus'></span>
+                    <div className='option' onClick={() => {
+                        console.log("ADD A NEW ENTRY");
+                    }}>
+                        <span className='fas fa-plus' ></span>
                     </div>
                 ) : (
                         <Link className='option' to='/signin'>SIGN IN</Link>
