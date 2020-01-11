@@ -1,6 +1,20 @@
 .homepage {
-    margin-top: 100px;
+    margin-top: 85px;
 }
 .tag-line {
     font-size: 20px;
+}
+
+.homepage-greeting {
+    margin: 30px 0 30px 0;
+}
+
+.homepage-option {
+    padding: 10px 10px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    }
+.homepage-option:hover {
+      color: #4582EC;
 }

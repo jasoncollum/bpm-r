@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
@@ -8,62 +8,55 @@ import { auth } from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
 
-class SignIn extends Component {
-    constructor(props) {
-        super(props);
+const SignIn = () => {
+    const [userCredentials, setUserCredentials] = useState({
+        email: '',
+        password: ''
+    });
 
-        this.state = {
-            email: '',
-            password: ''
-        }
-    }
+    const { email, password } = userCredentials;
 
-    handleSubmit = async e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-
-        const { email, password } = this.state;
-
         try {
             await auth.signInWithEmailAndPassword(email, password);
-            this.setState({ email: '', password: '' });
+            setUserCredentials({ email: '', password: '' });
         } catch (error) {
             console.log(error);
         }
     };
 
-    handleChange = e => {
+    const handleChange = e => {
         const { value, name } = e.target;
-        this.setState({ [name]: value });
+        setUserCredentials({ ...userCredentials, [name]: value });
     }
 
-    render() {
-        return (
-            <div className='sign-in'>
-                <span>Log in with your email and password</span>
+    return (
+        <div className='sign-in'>
+            <span>Log in with your email and password</span>
 
-                <form onSubmit={this.handleSubmit}>
-                    <FormInput
-                        name="email"
-                        type="email"
-                        value={this.state.email}
-                        handleChange={this.handleChange}
-                        label="email"
-                        required />
-                    <FormInput
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        handleChange={this.handleChange}
-                        label="password"
-                        required />
-                    <div className='button'>
-                        <CustomButton type="submit">Sign In</CustomButton>
-                    </div>
-                    <Link to='/signup'><span className='sign-up-message'>Sign up for an account</span></Link>
-                </form>
-            </div>
-        )
-    }
+            <form onSubmit={handleSubmit}>
+                <FormInput
+                    name="email"
+                    type="email"
+                    value={email}
+                    handleChange={handleChange}
+                    label="email"
+                    required />
+                <FormInput
+                    name="password"
+                    type="password"
+                    value={password}
+                    handleChange={handleChange}
+                    label="password"
+                    required />
+                <div className='button'>
+                    <CustomButton type="submit">Sign In</CustomButton>
+                </div>
+                <Link to='/signup'><span className='sign-up-message'>Sign up for an account</span></Link>
+            </form>
+        </div>
+    )
 }
 
 export default SignIn;
