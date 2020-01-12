@@ -9,7 +9,6 @@ import './entries.styles.scss';
 const Entries = () => {
     const [entries, setEntries] = useState([]);
     const currentUser = useContext(CurrentUserContext);
-    console.log("ENTRIES-USER::", currentUser);
 
     useEffect(() => {
         const fetchData = async (userId) => {
@@ -19,7 +18,7 @@ const Entries = () => {
             setEntries(data.docs.map(doc => doc.data()));
         }
         fetchData(currentUser.id);
-    }, [])
+    }, [currentUser])
 
     return (
         <div className="entries-container">

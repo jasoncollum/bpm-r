@@ -33,7 +33,6 @@ class App extends Component {
 
   unsubscribeFromAuth = null;
 
-  // address renaming
   componentWillMount() {
     localStorage.getItem('currentUser') && this.setState({
       currentUser: JSON.parse(localStorage.getItem('currentUser'))
@@ -64,10 +63,9 @@ class App extends Component {
     }
   }
 
-  // address renaming
-  // componentWillUpdate(nextProps, nextState) {
-  //   localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-  // }
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
+  }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
