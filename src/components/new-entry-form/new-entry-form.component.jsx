@@ -31,7 +31,7 @@ const NewEntryForm = () => {
             {/* <span>Add a new entry</span> */}
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <FormInput
-                    type='text'
+                    type='number'
                     name='systolic'
                     value={systolic}
                     onChange={handleChange}
@@ -39,7 +39,7 @@ const NewEntryForm = () => {
                     required
                 />
                 <FormInput
-                    type='text'
+                    type='number'
                     name='diastolic'
                     value={diastolic}
                     onChange={handleChange}
@@ -47,7 +47,7 @@ const NewEntryForm = () => {
                     required
                 />
                 <FormInput
-                    type='text'
+                    type='number'
                     name='pulse'
                     value={pulse}
                     onChange={handleChange}
@@ -55,7 +55,7 @@ const NewEntryForm = () => {
                     required
                 />
                 <FormInput
-                    type='text'
+                    type='number'
                     name='weight'
                     value={weight}
                     onChange={handleChange}
