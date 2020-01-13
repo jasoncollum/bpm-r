@@ -23,8 +23,7 @@ const NewEntryForm = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-        console.log('New Entry Form HANDLE_CHANGE', name, value);
-        // setNewEntryData({ ...newEntryData, [name]: value });
+        setNewEntryData({ ...newEntryData, [name]: value });
     }
 
     return (
