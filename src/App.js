@@ -5,6 +5,7 @@ import Header from './components/header/header.component';
 
 import HomePage from './pages/homepage/homepage.component';
 import Entries from './components/entries/entries.component';
+import NewEntryForm from './components/new-entry-form/new-entry-form.component';
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
 
@@ -33,7 +34,6 @@ class App extends Component {
 
   unsubscribeFromAuth = null;
 
-  // address renaming
   componentWillMount() {
     localStorage.getItem('currentUser') && this.setState({
       currentUser: JSON.parse(localStorage.getItem('currentUser'))
@@ -64,10 +64,9 @@ class App extends Component {
     }
   }
 
-  // address renaming
-  // componentWillUpdate(nextProps, nextState) {
-  //   localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
-  // }
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('currentUser', JSON.stringify(nextState.currentUser));
+  }
 
   componentWillUnmount() {
     this.unsubscribeFromAuth();
@@ -89,6 +88,14 @@ class App extends Component {
                   <Redirect to='/signin' />
                 ) : (
                     <Entries />
+                  )}
+            />
+            <Route exact path='/newentryform'
+              render={() =>
+                !this.state.currentUser ? (
+                  <Redirect to='/signin' />
+                ) : (
+                    <NewEntryForm />
                   )}
             />
             <Route
