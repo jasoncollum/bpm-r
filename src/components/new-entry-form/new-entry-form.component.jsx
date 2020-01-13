@@ -18,7 +18,22 @@ const NewEntryForm = () => {
     const { date, systolic, diastolic, pulse, weight, notes } = newEntryData;
 
     const handleSubmit = e => {
+        e.preventDefault();
         console.log('New Entry Form SUBMIT Button Clicked...');
+
+        try {
+            // Add logic to post new entry to db here
+
+            setNewEntryData({
+                systolic: '',
+                diastolic: '',
+                pulse: '',
+                weight: '',
+                notes: ''
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const handleChange = e => {
