@@ -1,14 +1,15 @@
 import React, { useReducer, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import CurrentUserContext from '../../contexts/current-user.context';
+import { firestore } from '../../firebase/firebase.utils';
 
 import './new-entry-form.styles.scss';
 
 const initialState = {
-    date: '',
     systolic: '',
     diastolic: '',
     pulse: '',
@@ -44,16 +45,20 @@ const reducer = (state, action) => {
 const NewEntryForm = () => {
     const currentUser = useContext(CurrentUserContext)
     const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('New Entry Form SUBMIT Button Clicked...');
-        console.log("USER_ID::", currentUser.id)
-
+        let date = new Date().toDateString();
         try {
-            // Add logic to post new entry to db here
+            await firestore.collection(`users/${currentUser.id}/entries`)
+                .add({
+                    ...state,
+                    date
+                });
+            history.push('/entries');
         } catch (error) {
-            console.error(error);
+            console.error('Error writing document...', error);
         }
     }
 
