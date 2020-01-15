@@ -1,44 +1,71 @@
-import React, { useState } from 'react';
+import React, { useReducer, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
+import CurrentUserContext from '../../contexts/current-user.context';
+import { firestore } from '../../firebase/firebase.utils';
+
 import './new-entry-form.styles.scss';
 
+const initialState = {
+    systolic: '',
+    diastolic: '',
+    pulse: '',
+    weight: '',
+    notes: ''
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "UPDATE_DATE":
+            return { ...state, date: action.value };
+
+        case "UPDATE_SYSTOLIC":
+            return { ...state, systolic: action.value };
+
+        case "UPDATE_DIASTOLIC":
+            return { ...state, diastolic: action.value };
+
+        case "UPDATE_PULSE":
+            return { ...state, pulse: action.value };
+
+        case "UPDATE_WEIGHT":
+            return { ...state, weight: action.value };
+
+        case "UPDATE_NOTES":
+            return { ...state, notes: action.value };
+
+        default:
+            return state;
+    }
+}
+
 const NewEntryForm = () => {
-    const [newEntryData, setNewEntryData] = useState({
-        date: '',
-        systolic: '',
-        diastolic: '',
-        pulse: '',
-        weight: '',
-        notes: ''
-    });
+    const currentUser = useContext(CurrentUserContext)
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
-    const { date, systolic, diastolic, pulse, weight, notes } = newEntryData;
-
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('New Entry Form SUBMIT Button Clicked...');
-
+        let date = new Date().toDateString();
         try {
-            // Add logic to post new entry to db here
-
-            setNewEntryData({
-                systolic: '',
-                diastolic: '',
-                pulse: '',
-                weight: '',
-                notes: ''
-            });
+            await firestore.collection(`users/${currentUser.id}/entries`)
+                .add({
+                    ...state,
+                    date
+                });
+            history.push('/entries');
         } catch (error) {
-            console.error(error);
+            console.error('Error writing document...', error);
         }
     }
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setNewEntryData({ ...newEntryData, [name]: value });
+
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
     }
 
     return (
@@ -48,7 +75,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='systolic'
-                    value={systolic}
+                    value={state.systolic}
                     onChange={handleChange}
                     label='systolic'
                     required
@@ -56,7 +83,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='diastolic'
-                    value={diastolic}
+                    value={state.diastolic}
                     onChange={handleChange}
                     label='diastolic'
                     required
@@ -64,7 +91,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='pulse'
-                    value={pulse}
+                    value={state.pulse}
                     onChange={handleChange}
                     label='pulse'
                     required
@@ -72,7 +99,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='weight'
-                    value={weight}
+                    value={state.weight}
                     onChange={handleChange}
                     label='weight'
                     required
@@ -80,7 +107,7 @@ const NewEntryForm = () => {
                 <textarea
                     className='entry-form-textarea'
                     name='notes'
-                    value={notes}
+                    value={state.notes}
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
