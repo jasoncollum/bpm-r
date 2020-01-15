@@ -1,7 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+
+import CurrentUserContext from '../../contexts/current-user.context';
 
 import './new-entry-form.styles.scss';
 
@@ -40,11 +42,13 @@ const reducer = (state, action) => {
 }
 
 const NewEntryForm = () => {
+    const currentUser = useContext(CurrentUserContext)
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleSubmit = e => {
         e.preventDefault();
         console.log('New Entry Form SUBMIT Button Clicked...');
+        console.log("USER_ID::", currentUser.id)
 
         try {
             // Add logic to post new entry to db here
