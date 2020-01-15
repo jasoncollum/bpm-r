@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
 import './new-entry-form.styles.scss';
 
-const NewEntryForm = () => {
-    const [newEntryData, setNewEntryData] = useState({
-        date: '',
-        systolic: '',
-        diastolic: '',
-        pulse: '',
-        weight: '',
-        notes: ''
-    });
+const initialState = {
+    date: '',
+    systolic: '',
+    diastolic: '',
+    pulse: '',
+    weight: '',
+    notes: ''
+};
 
-    const { date, systolic, diastolic, pulse, weight, notes } = newEntryData;
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "UPDATE_DATE":
+            return { ...state, date: action.value };
+
+        case "UPDATE_SYSTOLIC":
+            return { ...state, systolic: action.value };
+
+        case "UPDATE_DIASTOLIC":
+            return { ...state, diastolic: action.value };
+
+        case "UPDATE_PULSE":
+            return { ...state, pulse: action.value };
+
+        case "UPDATE_WEIGHT":
+            return { ...state, weight: action.value };
+
+        case "UPDATE_NOTES":
+            return { ...state, notes: action.value };
+
+        default:
+            return state;
+    }
+}
+
+const NewEntryForm = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -23,14 +48,6 @@ const NewEntryForm = () => {
 
         try {
             // Add logic to post new entry to db here
-
-            setNewEntryData({
-                systolic: '',
-                diastolic: '',
-                pulse: '',
-                weight: '',
-                notes: ''
-            });
         } catch (error) {
             console.error(error);
         }
@@ -38,7 +55,8 @@ const NewEntryForm = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setNewEntryData({ ...newEntryData, [name]: value });
+
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
     }
 
     return (
@@ -48,7 +66,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='systolic'
-                    value={systolic}
+                    value={state.systolic}
                     onChange={handleChange}
                     label='systolic'
                     required
@@ -56,7 +74,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='diastolic'
-                    value={diastolic}
+                    value={state.diastolic}
                     onChange={handleChange}
                     label='diastolic'
                     required
@@ -64,7 +82,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='pulse'
-                    value={pulse}
+                    value={state.pulse}
                     onChange={handleChange}
                     label='pulse'
                     required
@@ -72,7 +90,7 @@ const NewEntryForm = () => {
                 <FormInput
                     type='number'
                     name='weight'
-                    value={weight}
+                    value={state.weight}
                     onChange={handleChange}
                     label='weight'
                     required
@@ -80,7 +98,7 @@ const NewEntryForm = () => {
                 <textarea
                     className='entry-form-textarea'
                     name='notes'
-                    value={notes}
+                    value={state.notes}
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
