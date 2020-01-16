@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
@@ -28,12 +29,14 @@ const reducer = (state, action) => {
 
 const SignIn = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         try {
             await auth.signInWithEmailAndPassword(state.email, state.password);
+            history.push('/');
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +45,7 @@ const SignIn = () => {
     const handleChange = e => {
         const { name, value } = e.target;
 
-        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     return (

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
@@ -8,37 +9,54 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './sign-up.styles.scss';
 
-const SignUp = () => {
-    const [userCredentials, setUserCredentials] = useState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    })
+const initialState = {
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+};
 
-    const { displayName, email, password, confirmPassword } = userCredentials;
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "UPDATE_DISPLAYNAME":
+            return { ...state, displayName: action.value };
+
+        case "UPDATE_EMAIL":
+            return { ...state, email: action.value };
+
+        case "UPDATE_PASSWORD":
+            return { ...state, password: action.value };
+
+        case "UPDATE_CONFIRMPASSWORD":
+            return { ...state, confirmPassword: action.value };
+
+        default:
+            return state;
+    }
+}
+
+const SignUp = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
+
+    const { displayName } = state;
 
     const handleSubmit = async e => {
         e.preventDefault();
-        if (password !== confirmPassword) {
+        if (state.password !== state.confirmPassword) {
             alert("Passwords don't match");
             return;
         }
 
         try {
             const { user } = await auth.createUserWithEmailAndPassword(
-                email,
-                password
+                state.email,
+                state.password
             );
 
             await createUserProfileDocument(user, { displayName });
+            history.push('/');
 
-            setUserCredentials({
-                displayName: '',
-                email: '',
-                password: '',
-                confirmPassword: ''
-            });
         } catch (error) {
             console.error(error);
         }
@@ -46,8 +64,8 @@ const SignUp = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-
-        setUserCredentials({ ...userCredentials, [name]: value });
+        console.log("DISPLAY_NAME::", displayName)
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     return (
@@ -57,7 +75,7 @@ const SignUp = () => {
                 <FormInput
                     type='text'
                     name='displayName'
-                    value={displayName}
+                    value={state.displayName}
                     onChange={handleChange}
                     label='display name'
                     required
@@ -65,7 +83,7 @@ const SignUp = () => {
                 <FormInput
                     type='email'
                     name='email'
-                    value={email}
+                    value={state.email}
                     onChange={handleChange}
                     label='email'
                     required
@@ -73,7 +91,7 @@ const SignUp = () => {
                 <FormInput
                     type='password'
                     name='password'
-                    value={password}
+                    value={state.password}
                     onChange={handleChange}
                     label='password'
                     required
@@ -81,7 +99,7 @@ const SignUp = () => {
                 <FormInput
                     type='password'
                     name='confirmPassword'
-                    value={confirmPassword}
+                    value={state.confirmPassword}
                     onChange={handleChange}
                     label='confirm password'
                     required
