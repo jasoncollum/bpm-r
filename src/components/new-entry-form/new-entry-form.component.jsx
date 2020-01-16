@@ -52,11 +52,14 @@ const NewEntryForm = () => {
         e.preventDefault();
         let date = moment().format("M/D/YYYY LT");
         try {
+            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc();
+
             await firestore.collection(`users/${currentUser.id}/entries`)
                 .add({
                     ...state,
-                    date
-                });
+                    date,
+                    id: entryRef.id
+                })
             history.push('/entries');
         } catch (error) {
             console.error('Error writing document...', error);
