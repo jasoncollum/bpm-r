@@ -13,7 +13,7 @@ const Entries = () => {
     useEffect(() => {
         const fetchData = async (userId) => {
             const data = await firestore.collection(`users/${userId}/entries`)
-                .orderBy("date", "asc")
+                .orderBy("id", "desc")
                 .get();
             setEntries(data.docs.map(doc => doc.data()));
         }
