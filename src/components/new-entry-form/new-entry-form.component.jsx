@@ -1,5 +1,6 @@
 import React, { useReducer, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -49,7 +50,7 @@ const NewEntryForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let date = new Date().toDateString();
+        let date = moment().format("M/D/YYYY LT");
         try {
             await firestore.collection(`users/${currentUser.id}/entries`)
                 .add({
