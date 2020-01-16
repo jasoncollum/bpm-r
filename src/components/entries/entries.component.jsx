@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Table } from 'reactstrap';
-// import moment from 'moment';
 
 import { firestore } from '../../firebase/firebase.utils';
 
@@ -14,7 +13,7 @@ const Entries = () => {
     useEffect(() => {
         const fetchData = async (userId) => {
             const data = await firestore.collection(`users/${userId}/entries`)
-                .orderBy("date", "desc")
+                .orderBy("id", "desc")
                 .get();
             setEntries(data.docs.map(doc => doc.data()));
         }
