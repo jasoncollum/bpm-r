@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 }
 
 const NewEntryForm = () => {
-    const currentUser = useContext(CurrentUserContext)
+    const currentUser = useContext(CurrentUserContext);
     const [state, dispatch] = useReducer(reducer, initialState);
     const history = useHistory();
 
@@ -52,13 +52,10 @@ const NewEntryForm = () => {
         e.preventDefault();
         let date = moment().format("M/D/YYYY LT");
         try {
-            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc();
-
             await firestore.collection(`users/${currentUser.id}/entries`)
                 .add({
                     ...state,
-                    date,
-                    id: entryRef.id
+                    date
                 })
             history.push('/entries');
         } catch (error) {
@@ -74,7 +71,6 @@ const NewEntryForm = () => {
 
     return (
         <div className='new-entry-form'>
-            {/* <span>Add a new entry</span> */}
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <FormInput
                     type='number'

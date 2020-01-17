@@ -3,21 +3,12 @@ import { useHistory } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { Button } from 'reactstrap';
 
 import CurrentUserContext from '../../contexts/current-user.context';
 import { firestore } from '../../firebase/firebase.utils';
 
 import './edit-entry-form.styles.scss';
-
-// const initialState = {
-//     id: '',
-//     date: '',
-//     systolic: '',
-//     diastolic: '',
-//     pulse: '',
-//     weight: '',
-//     notes: ''
-// };
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -42,45 +33,39 @@ const reducer = (state, action) => {
 }
 
 const EditEntryForm = ({ entry }) => {
-    // const initialState = {
-    //     id: entry.id,
-    //     date: '',
-    //     systolic: '',
-    //     diastolic: '',
-    //     pulse: '',
-    //     weight: '',
-    //     notes: entry.notes
-    // };
-    const currentUser = useContext(CurrentUserContext)
+    const currentUser = useContext(CurrentUserContext);
     const [state, dispatch] = useReducer(reducer, entry);
     const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("EDIT ENTRY FORM SUBMIT BUTTON CLICKED")
-        // try {
-        //     const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc();
 
-        //     await firestore.collection(`users/${currentUser.id}/entries`)
-        //         .add({
-        //             ...state,
-        //             date,
-        //             id: entryRef.id
-        //         })
-        //     history.push('/entries');
-        // } catch (error) {
-        //     console.error('Error writing document...', error);
-        // }
+        try {
+            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+
+            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).set({
+                date: state.date,
+                systolic: state.systolic,
+                diastolic: state.diastolic,
+                pulse: state.pulse,
+                weight: state.weight,
+                notes: state.notes
+            });
+
+            history.push('/entries');
+        } catch (error) {
+            console.error('Error writing document...', error);
+        }
     }
 
     const handleChange = e => {
         const { name, value } = e.target;
-        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
     return (
-        <div className='edit-entry-form'>
+        <div>
             <p>{state.date}</p>
-            <form className='sign-up-form' onSubmit={handleSubmit}>
+            <form className='edit-entry-form' onSubmit={handleSubmit}>
                 <FormInput
                     type='number'
                     name='systolic'
@@ -114,7 +99,7 @@ const EditEntryForm = ({ entry }) => {
                     required
                 />
                 <textarea
-                    className='entry-form-textarea'
+                    className='edit-entry-form-textarea'
                     name='notes'
                     value={state.notes}
                     placeholder='Enter notes here...'
@@ -124,6 +109,7 @@ const EditEntryForm = ({ entry }) => {
 
                 </textarea>
                 <CustomButton type='submit'> SAVE CHANGES </CustomButton>
+                <Button color="danger" onClick={() => console.log("DELETE BUTTON CLICKED")}>DELETE ENTRY</Button>
             </form>
 
         </div>

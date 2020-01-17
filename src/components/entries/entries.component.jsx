@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table, Modal, ModalHeader } from 'reactstrap';
+
+import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
 import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
 
@@ -16,10 +17,13 @@ const Entries = () => {
 
     useEffect(() => {
         const fetchData = async (userId) => {
-            const data = await firestore.collection(`users/${userId}/entries`)
-                .orderBy("id", "desc")
+            const snapshot = await firestore.collection(`users/${userId}/entries`)
+                .orderBy("date", "desc")
                 .get();
-            setEntries(data.docs.map(doc => doc.data()));
+            setEntries(snapshot.docs.map(doc => {
+                let data = doc.data()
+                return { ...data, id: doc.id }
+            }));
         }
         fetchData(currentUser.id);
     }, [currentUser]);
@@ -66,8 +70,12 @@ const Entries = () => {
 
                 </tbody>
             </Table>
-            <Modal isOpen={modal}>
-                <EditEntryForm entry={entryToEdit} />
+            <Modal isOpen={modal} toggle={toggleModal}>
+                <ModalHeader toggle={toggleModal}>Edit bpm entry...</ModalHeader>
+                <ModalBody>
+                    <EditEntryForm entry={entryToEdit} />
+                </ModalBody>
+                <ModalFooter></ModalFooter>
             </Modal>
         </div>
     )

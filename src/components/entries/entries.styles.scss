@@ -15,6 +15,11 @@
 
 .icon-btn {
     border: none;
+    background-color: white;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .pencil-icon {
