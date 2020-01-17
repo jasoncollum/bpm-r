@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Table } from 'reactstrap';
+import { Table, Modal, ModalHeader } from 'reactstrap';
+import useToggle from '../../hooks/useToggle';
+import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
 
 import { firestore } from '../../firebase/firebase.utils';
 
@@ -8,6 +10,8 @@ import './entries.styles.scss';
 
 const Entries = () => {
     const [entries, setEntries] = useState([]);
+    const [entryToEdit, setEntryToEdit] = useState(null);
+    const [modal, toggleModal] = useToggle(false);
     const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {
@@ -18,7 +22,12 @@ const Entries = () => {
             setEntries(data.docs.map(doc => doc.data()));
         }
         fetchData(currentUser.id);
-    }, [currentUser])
+    }, [currentUser]);
+
+    const handleEditClick = entry => {
+        setEntryToEdit(entry);
+        toggleModal();
+    }
 
     return (
         <div className="entries-container">
@@ -34,17 +43,21 @@ const Entries = () => {
                 </thead>
                 <tbody>
                     {
-                        entries.map(({ id, date, systolic, diastolic, pulse, weight, notes }) => (
-                            <React.Fragment key={id}>
+                        entries.map(entry => (
+                            <React.Fragment key={entry.id}>
                                 <tr>
-                                    <td>{date}</td>
-                                    <td>{systolic}/{diastolic}</td>
-                                    <td>{pulse}</td>
-                                    <td>{weight}</td>
-                                    <td><i className='fas fa-pencil-alt pencil-icon'></i></td>
+                                    <td>{entry.date}</td>
+                                    <td>{entry.systolic}/{entry.diastolic}</td>
+                                    <td>{entry.pulse}</td>
+                                    <td>{entry.weight}</td>
+                                    <td><button className='icon-btn' onClick={() => handleEditClick(entry)}>
+                                        <i className='fas fa-pencil-alt pencil-icon'></i>
+                                    </button>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td className='table-note' colSpan="12">{notes}
+                                    <td className='table-note' colSpan="12">
+                                        {entry.notes}
                                     </td>
                                 </tr>
                             </React.Fragment>
@@ -53,6 +66,9 @@ const Entries = () => {
 
                 </tbody>
             </Table>
+            <Modal isOpen={modal}>
+                <EditEntryForm entry={entryToEdit} />
+            </Modal>
         </div>
     )
 }
