@@ -1,8 +1,8 @@
 .edit-entry-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 300px;
-    justify-content: center;
     margin: 0 auto;
 }
 
@@ -16,3 +16,20 @@
       outline: none;
     }
 }
+
+.edit-entry-form-buttons-container {
+    display: flex;
+}
+
+.edit-entry-form-delete-button {
+  min-width: 135px;
+  width: auto;
+  height: 50px;
+  font-size: 15px;
+  font-family: 'Open Sans Condensed';
+  font-weight: bolder;
+  border-radius: 0;
+}
+
+
+

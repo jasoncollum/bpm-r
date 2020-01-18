@@ -1,7 +1,7 @@
 import React, { useReducer, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import FormInput from '../form-input/form-input.component';
+import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import { Button } from 'reactstrap';
 
@@ -63,10 +63,10 @@ const EditEntryForm = ({ entry }) => {
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
     return (
-        <div>
+        <div className='edit-entry-form-container'>
             <p>{state.date}</p>
             <form className='edit-entry-form' onSubmit={handleSubmit}>
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='systolic'
                     value={state.systolic}
@@ -74,7 +74,7 @@ const EditEntryForm = ({ entry }) => {
                     label='systolic'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='diastolic'
                     value={state.diastolic}
@@ -82,7 +82,7 @@ const EditEntryForm = ({ entry }) => {
                     label='diastolic'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='pulse'
                     value={state.pulse}
@@ -90,7 +90,7 @@ const EditEntryForm = ({ entry }) => {
                     label='pulse'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='weight'
                     value={state.weight}
@@ -106,10 +106,15 @@ const EditEntryForm = ({ entry }) => {
                     onChange={handleChange}
                     rows='2'
                 >
-
                 </textarea>
-                <CustomButton type='submit'> SAVE CHANGES </CustomButton>
-                <Button color="danger" onClick={() => console.log("DELETE BUTTON CLICKED")}>DELETE ENTRY</Button>
+                <div className='edit-entry-form-buttons-container'>
+                    <Button
+                        outline color="danger"
+                        className='edit-entry-form-delete-button'
+                        onClick={() => console.log("DELETE BUTTON CLICKED")}
+                    > DELETE ENTRY </Button>
+                    <CustomButton type='submit'> SAVE CHANGES </CustomButton>
+                </div>
             </form>
 
         </div>
