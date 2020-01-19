@@ -57,6 +57,21 @@ const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
         }
     }
 
+    const handleDelete = async (e) => {
+        e.preventDefault()
+
+        try {
+            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+
+            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).delete();
+
+            fetchEntries();
+            toggleModal();
+        } catch (error) {
+            console.error('Error writing document...', error);
+        }
+    }
+
     const handleChange = e => {
         const { name, value } = e.target;
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
@@ -110,7 +125,7 @@ const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
                     <Button
                         outline color="danger"
                         className='edit-entry-form-delete-button'
-                        onClick={() => console.log("DELETE BUTTON CLICKED")}
+                        onClick={handleDelete}
                     > DELETE ENTRY </Button>
                     <CustomButton type='submit'> SAVE CHANGES </CustomButton>
                 </div>

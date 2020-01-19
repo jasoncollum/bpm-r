@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
 import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
 
