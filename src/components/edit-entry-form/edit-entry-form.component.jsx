@@ -1,28 +1,16 @@
 import React, { useReducer, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import moment from 'moment';
 
-import FormInput from '../form-input/form-input.component';
+import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { Button } from 'reactstrap';
 
 import CurrentUserContext from '../../contexts/current-user.context';
 import { firestore } from '../../firebase/firebase.utils';
 
-import './new-entry-form.styles.scss';
-
-const initialState = {
-    systolic: '',
-    diastolic: '',
-    pulse: '',
-    weight: '',
-    notes: ''
-};
+import './edit-entry-form.styles.scss';
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case "UPDATE_DATE":
-            return { ...state, date: action.value };
-
         case "UPDATE_SYSTOLIC":
             return { ...state, systolic: action.value };
 
@@ -43,21 +31,42 @@ const reducer = (state, action) => {
     }
 }
 
-const NewEntryForm = () => {
+const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
     const currentUser = useContext(CurrentUserContext);
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const history = useHistory();
+    const [state, dispatch] = useReducer(reducer, entry);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let date = moment().format("M/D/YYYY LT");
+
         try {
-            await firestore.collection(`users/${currentUser.id}/entries`)
-                .add({
-                    ...state,
-                    date
-                })
-            history.push('/entries');
+            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+
+            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).set({
+                date: state.date,
+                systolic: state.systolic,
+                diastolic: state.diastolic,
+                pulse: state.pulse,
+                weight: state.weight,
+                notes: state.notes
+            });
+
+            fetchEntries();
+            toggleModal();
+        } catch (error) {
+            console.error('Error writing document...', error);
+        }
+    }
+
+    const handleDelete = async (e) => {
+        e.preventDefault()
+
+        try {
+            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+
+            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).delete();
+
+            fetchEntries();
+            toggleModal();
         } catch (error) {
             console.error('Error writing document...', error);
         }
@@ -65,14 +74,13 @@ const NewEntryForm = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-
-        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
-
     return (
-        <div className='new-entry-form'>
-            <form className='sign-up-form' onSubmit={handleSubmit}>
-                <FormInput
+        <div className='edit-entry-form-container'>
+            <p>{state.date}</p>
+            <form className='edit-entry-form' onSubmit={handleSubmit}>
+                <EditFormInput
                     type='number'
                     name='systolic'
                     value={state.systolic}
@@ -80,7 +88,7 @@ const NewEntryForm = () => {
                     label='systolic'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='diastolic'
                     value={state.diastolic}
@@ -88,7 +96,7 @@ const NewEntryForm = () => {
                     label='diastolic'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='pulse'
                     value={state.pulse}
@@ -96,7 +104,7 @@ const NewEntryForm = () => {
                     label='pulse'
                     required
                 />
-                <FormInput
+                <EditFormInput
                     type='number'
                     name='weight'
                     value={state.weight}
@@ -105,20 +113,26 @@ const NewEntryForm = () => {
                     required
                 />
                 <textarea
-                    className='entry-form-textarea'
+                    className='edit-entry-form-textarea'
                     name='notes'
                     value={state.notes}
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
                 >
-
                 </textarea>
-                <CustomButton type='submit'> SAVE ENTRY </CustomButton>
+                <div className='edit-entry-form-buttons-container'>
+                    <Button
+                        outline color="danger"
+                        className='edit-entry-form-delete-button'
+                        onClick={handleDelete}
+                    > DELETE ENTRY </Button>
+                    <CustomButton type='submit'> SAVE CHANGES </CustomButton>
+                </div>
             </form>
 
         </div>
     )
 }
 
-export default NewEntryForm;
+export default EditEntryForm;

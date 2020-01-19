@@ -13,6 +13,15 @@
     padding-top: 0px !important;
 }
 
+.icon-btn {
+    border: none;
+    background-color: white;
+
+    &:focus {
+        outline: none;
+    }
+}
+
 .pencil-icon {
     color: #f0ad4e;
 }

@@ -1,0 +1,35 @@
+.edit-entry-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.edit-entry-form-textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 25px 0 45px 0;
+    border: 1px solid grey;
+
+    &:focus {
+      outline: none;
+    }
+}
+
+.edit-entry-form-buttons-container {
+    display: flex;
+}
+
+.edit-entry-form-delete-button {
+  min-width: 135px;
+  width: auto;
+  height: 50px;
+  font-size: 15px;
+  font-family: 'Open Sans Condensed';
+  font-weight: bolder;
+  border-radius: 0;
+}
+
+
+
