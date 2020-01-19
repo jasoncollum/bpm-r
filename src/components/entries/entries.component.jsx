@@ -16,17 +16,18 @@ const Entries = () => {
     const currentUser = useContext(CurrentUserContext);
 
     useEffect(() => {
-        const fetchData = async (userId) => {
-            const snapshot = await firestore.collection(`users/${userId}/entries`)
-                .orderBy("date", "desc")
-                .get();
-            setEntries(snapshot.docs.map(doc => {
-                let data = doc.data()
-                return { ...data, id: doc.id }
-            }));
-        }
-        fetchData(currentUser.id);
-    }, [currentUser]);
+        fetchEntries();
+    }, []);
+
+    const fetchEntries = async () => {
+        const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
+            .orderBy("date", "desc")
+            .get();
+        setEntries(snapshot.docs.map(doc => {
+            let data = doc.data()
+            return { ...data, id: doc.id }
+        }));
+    }
 
     const handleEditClick = entry => {
         setEntryToEdit(entry);
@@ -73,7 +74,11 @@ const Entries = () => {
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Edit bpm entry...</ModalHeader>
                 <ModalBody>
-                    <EditEntryForm entry={entryToEdit} />
+                    <EditEntryForm
+                        entry={entryToEdit}
+                        toggleModal={toggleModal}
+                        fetchEntries={fetchEntries}
+                    />
                 </ModalBody>
                 <ModalFooter></ModalFooter>
             </Modal>

@@ -1,5 +1,4 @@
 import React, { useReducer, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -32,10 +31,9 @@ const reducer = (state, action) => {
     }
 }
 
-const EditEntryForm = ({ entry }) => {
+const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
     const currentUser = useContext(CurrentUserContext);
     const [state, dispatch] = useReducer(reducer, entry);
-    const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -52,7 +50,8 @@ const EditEntryForm = ({ entry }) => {
                 notes: state.notes
             });
 
-            history.push('/entries');
+            fetchEntries();
+            toggleModal();
         } catch (error) {
             console.error('Error writing document...', error);
         }
