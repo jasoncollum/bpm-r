@@ -68,7 +68,7 @@ const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
             fetchEntries();
             toggleModal();
         } catch (error) {
-            console.error('Error writing document...', error);
+            console.error('Error deleting document...', error);
         }
     }
 
