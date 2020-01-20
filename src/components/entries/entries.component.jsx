@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
@@ -36,6 +37,21 @@ const Entries = () => {
 
     return (
         <div className="entries-container">
+            <div className='entries-header'>
+                <div className='entries-header-options'>
+                    <Link className='entries-header-option' to='/'>
+                        <span className='far fa-heart entries-header-heart-outline'></span>
+                    </Link>
+                    <button link className='entries-header-option'>ENTRIES</button>
+                    <button link className='entries-header-option'>7 DAYS</button>
+                    <button link className='entries-header-option'>30 DAYS</button>
+                    <button link className='entries-header-option'>GRAPH</button>
+                    <Link className='entries-header-option' to='/newentryform'>
+                        <span className='fas fa-plus' ></span>
+                    </Link>
+                </div>
+            </div>
+
             <Table className='table'>
                 <thead>
                     <tr>
