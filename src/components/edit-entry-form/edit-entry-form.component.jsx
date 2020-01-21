@@ -4,7 +4,7 @@ import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import { Button } from 'reactstrap';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 import { firestore } from '../../firebase/firebase.utils';
 
 import './edit-entry-form.styles.scss';
@@ -31,8 +31,8 @@ const reducer = (state, action) => {
     }
 }
 
-const EditEntryForm = ({ entry, toggleModal, fetchEntries }) => {
-    const currentUser = useContext(CurrentUserContext);
+const EditEntryForm = ({ entry, toggleModal }) => {
+    const { currentUser, fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, entry);
 
     const handleSubmit = async (e) => {

@@ -1,34 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
 
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
 import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
 
-import { firestore } from '../../firebase/firebase.utils';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 import './entries.styles.scss';
 
 const Entries = () => {
-    const [entries, setEntries] = useState([]);
     const [entryToEdit, setEntryToEdit] = useState(null);
     const [modal, toggleModal] = useToggle(false);
-    const currentUser = useContext(CurrentUserContext);
-
-    // useEffect(() => {
-    //     fetchEntries();
-    // }, []);
-
-    const fetchEntries = async () => {
-        const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
-            .orderBy("date", "desc")
-            .get();
-        setEntries(snapshot.docs.map(doc => {
-            let data = doc.data()
-            return { ...data, id: doc.id }
-        }));
-    }
+    const { entries } = useContext(BpmContext);
 
     const handleEditClick = entry => {
         setEntryToEdit(entry);
@@ -78,7 +61,6 @@ const Entries = () => {
                     <EditEntryForm
                         entry={entryToEdit}
                         toggleModal={toggleModal}
-                        fetchEntries={fetchEntries}
                     />
                 </ModalBody>
                 <ModalFooter></ModalFooter>
