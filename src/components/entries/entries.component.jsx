@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
@@ -15,9 +16,9 @@ const Entries = () => {
     const [modal, toggleModal] = useToggle(false);
     const currentUser = useContext(CurrentUserContext);
 
-    useEffect(() => {
-        fetchEntries();
-    }, []);
+    // useEffect(() => {
+    //     fetchEntries();
+    // }, []);
 
     const fetchEntries = async () => {
         const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)

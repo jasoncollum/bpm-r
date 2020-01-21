@@ -1,10 +1,13 @@
 .entries-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
+// Entries Table
 .table {
     text-align: left;
+    align-self: center; 
 }
 
 .table-note {
@@ -26,6 +29,7 @@
     color: #f0ad4e;
 }
 
+// Media Queries
 @media (min-width: 576px) {
     .table {
         max-width: 500px;
