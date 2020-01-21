@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 
 import './header.styles.scss';
 
 const Header = () => {
-    const currentUser = useContext(CurrentUserContext);
+    const currentUser = useContext(BpmContext);
     return (
         <div className='header'>
             <div className='options'>

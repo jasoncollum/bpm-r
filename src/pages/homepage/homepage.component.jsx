@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 
 import Branding from '../../components/branding/branding.component';
 
 import './homepage.styles.scss';
 
 const HomePage = ({ signUserOut }) => {
-    const currentUser = useContext(CurrentUserContext)
+    const currentUser = useContext(BpmContext)
 
     return (
         <div className='homepage'>

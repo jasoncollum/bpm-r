@@ -5,7 +5,7 @@ import moment from 'moment';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 import { firestore } from '../../firebase/firebase.utils';
 
 import './new-entry-form.styles.scss';
@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 }
 
 const NewEntryForm = () => {
-    const currentUser = useContext(CurrentUserContext);
+    const currentUser = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, initialState);
     const history = useHistory();
 

@@ -12,7 +12,7 @@ import SignUp from './components/sign-up/sign-up.component';
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 
-import CurrentUserContext from './contexts/current-user.context';
+import BpmContext from './contexts/bpm.context';
 
 import './App.css';
 
@@ -62,7 +62,7 @@ const App = () => {
 
   return (
     <div className="App" >
-      <CurrentUserContext.Provider value={currentUser}>
+      <BpmContext.Provider value={{ currentUser, entries, fetchEntries }}>
         <Header entries={entries} />
 
         <Switch>
@@ -111,7 +111,7 @@ const App = () => {
                 )}
           />
         </Switch>
-      </CurrentUserContext.Provider>
+      </BpmContext.Provider>
     </div>
   );
 }

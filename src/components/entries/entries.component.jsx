@@ -7,28 +7,28 @@ import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
 
 import { firestore } from '../../firebase/firebase.utils';
 
-import CurrentUserContext from '../../contexts/current-user.context';
+import BpmContext from '../../contexts/bpm.context';
 import './entries.styles.scss';
 
 const Entries = () => {
-    const [entries, setEntries] = useState([]);
+    // const [entries, setEntries] = useState([]);
     const [entryToEdit, setEntryToEdit] = useState(null);
     const [modal, toggleModal] = useToggle(false);
-    const currentUser = useContext(CurrentUserContext);
+    const { currentUser, entries } = useContext(BpmContext);
 
     // useEffect(() => {
     //     fetchEntries();
     // }, []);
 
-    const fetchEntries = async () => {
-        const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
-            .orderBy("date", "desc")
-            .get();
-        setEntries(snapshot.docs.map(doc => {
-            let data = doc.data()
-            return { ...data, id: doc.id }
-        }));
-    }
+    // const fetchEntries = async () => {
+    // const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
+    //     .orderBy("date", "desc")
+    //     .get();
+    // setEntries(snapshot.docs.map(doc => {
+    //     let data = doc.data()
+    //     return { ...data, id: doc.id }
+    // }));
+    // }
 
     const handleEditClick = entry => {
         setEntryToEdit(entry);
@@ -78,7 +78,7 @@ const Entries = () => {
                     <EditEntryForm
                         entry={entryToEdit}
                         toggleModal={toggleModal}
-                        fetchEntries={fetchEntries}
+                    // fetchEntries={fetchEntries}
                     />
                 </ModalBody>
                 <ModalFooter></ModalFooter>
