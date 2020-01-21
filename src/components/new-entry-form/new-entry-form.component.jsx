@@ -44,7 +44,7 @@ const reducer = (state, action) => {
 }
 
 const NewEntryForm = () => {
-    const currentUser = useContext(BpmContext);
+    const { currentUser, fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, initialState);
     const history = useHistory();
 
@@ -57,6 +57,7 @@ const NewEntryForm = () => {
                     ...state,
                     date
                 })
+            fetchEntries();
             history.push('/entries');
         } catch (error) {
             console.error('Error writing document...', error);
