@@ -5,9 +5,8 @@ import CurrentUserContext from '../../contexts/current-user.context';
 
 import './header.styles.scss';
 
-const Header = ({ signUserOut }) => {
+const Header = () => {
     const currentUser = useContext(CurrentUserContext);
-
     return (
         <div className='header'>
             <div className='options'>
@@ -15,9 +14,10 @@ const Header = ({ signUserOut }) => {
                     <span className='far fa-heart heart-outline'></span>
                 </Link>
                 <Link className='option' to='/entries'>ENTRIES</Link>
-                <Link className='option' to='/entries'>7 DAYS</Link>
-                <Link className='option' to='/entries'>30 DAYS</Link>
-                <Link className='option' to='/months'>12 MONTHS</Link>
+                <Link className='option'
+                    to={{ pathname: '/days', state: { sevenDays: true } }}>7 DAYS</Link>
+                <Link className='option'
+                    to={{ pathname: '/days', state: { sevenDays: false } }}>30 DAYS</Link>
                 {currentUser ? (
                     <Link className='option' to='/newentryform'>
                         <span className='fas fa-plus' ></span>
@@ -27,7 +27,7 @@ const Header = ({ signUserOut }) => {
                     )
                 }
             </div>
-        </div>
+        </div >
     )
 };
 

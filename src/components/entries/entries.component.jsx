@@ -16,9 +16,9 @@ const Entries = () => {
     const [modal, toggleModal] = useToggle(false);
     const currentUser = useContext(CurrentUserContext);
 
-    useEffect(() => {
-        fetchEntries();
-    }, []);
+    // useEffect(() => {
+    //     fetchEntries();
+    // }, []);
 
     const fetchEntries = async () => {
         const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
@@ -37,21 +37,6 @@ const Entries = () => {
 
     return (
         <div className="entries-container">
-            <div className='entries-header'>
-                <div className='entries-header-options'>
-                    <Link className='entries-header-option' to='/'>
-                        <span className='far fa-heart entries-header-heart-outline'></span>
-                    </Link>
-                    <button link className='entries-header-option'>ENTRIES</button>
-                    <button link className='entries-header-option'>7 DAYS</button>
-                    <button link className='entries-header-option'>30 DAYS</button>
-                    <button link className='entries-header-option'>GRAPH</button>
-                    <Link className='entries-header-option' to='/newentryform'>
-                        <span className='fas fa-plus' ></span>
-                    </Link>
-                </div>
-            </div>
-
             <Table className='table'>
                 <thead>
                     <tr>

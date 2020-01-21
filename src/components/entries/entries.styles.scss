@@ -4,38 +4,6 @@
     justify-content: center;
 }
 
-// Entries Header
-.entries-header {
-  height: 70px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  .entries-header-options {
-    height: 100%;
-    display: flex;
-    align-items: center;
-
-    .entries-header-option {
-      margin: 0 3px;
-      padding: 10px 10px;
-      cursor: pointer;
-      font-weight: 500;
-      text-decoration: none;
-      border: none;
-      background: transparent;
-    }
-    .entries-header-option:hover {
-      color: #4582EC;
-    }
-  }
-}
-
-.entries-header-heart-outline {
-    font-size: 18px;
-    color: #676c72;
-}
-
 // Entries Table
 .table {
     text-align: left;
