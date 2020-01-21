@@ -8,7 +8,7 @@ import Branding from '../../components/branding/branding.component';
 import './homepage.styles.scss';
 
 const HomePage = ({ signUserOut }) => {
-    const currentUser = useContext(BpmContext)
+    const { currentUser } = useContext(BpmContext);
 
     return (
         <div className='homepage'>
