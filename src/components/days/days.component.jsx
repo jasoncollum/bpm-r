@@ -4,21 +4,24 @@ import moment from 'moment';
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import useToggle from '../../hooks/useToggle';
 import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
+import Header from '../header/header.component';
 
 import BpmContext from '../../contexts/bpm.context';
 
 import '../entries/entries.styles.scss';
+import './days.styles.scss';
 
-const Days = ({ sevenDays }) => {
+const Days = ({ days }) => {
     const { entries } = useContext(BpmContext);
     const [entryToEdit, setEntryToEdit] = useState(null);
     const [modal, toggleModal] = useToggle(false);
 
-    const [numDays, setNumDays] = useState(sevenDays ? 7 : 30);
+    const [prevDays, setPrevDays] = useState(days);
+    const [numDays, setNumDays] = useState(days);
     const [filteredEntries, setFilteredEntries] = useState([]);
     const [dateFromToday, setDateFromToday] = useState(null);
 
-    console.log("SEVEN_DAYS::", sevenDays)
+    console.log("SEVEN_DAYS::", days)
     console.log("NUM_DAYS::", numDays)
 
     // Calculate date from today
@@ -28,7 +31,7 @@ const Days = ({ sevenDays }) => {
             setDateFromToday(result);
         }
         getDateFromToday();
-    }, [numDays]);
+    }, [prevDays]);
 
     // Filter entries by date
     useEffect(() => {
@@ -38,6 +41,12 @@ const Days = ({ sevenDays }) => {
             )
         }
     }, [dateFromToday])
+
+    // Render Days component if sevenDays variable changes
+    if (days !== prevDays) {
+        setNumDays(days);
+        setPrevDays(days);
+    }
 
     // Calculate averages
     const getSysAverage = () => {
@@ -69,10 +78,10 @@ const Days = ({ sevenDays }) => {
     return (
         <div className="entries-container">
             {
-                sevenDays ?
-                    <p>7 Day BP Average:  {sysAvg}/{diaAvg}</p>
+                (days === 7) ?
+                    <p className='bp-average-message'>7 Day BP Average:  {sysAvg}/{diaAvg}</p>
                     :
-                    <p>30 Day BP Average:  {sysAvg}/{diaAvg}</p>
+                    <p className='bp-average-message'>30 Day BP Average:  {sysAvg}/{diaAvg}</p>
             }
             <Table className='table'>
                 <thead>
@@ -124,11 +133,3 @@ const Days = ({ sevenDays }) => {
 };
 
 export default Days;
-
-
-// 1. filter entries:  Last 7 Days || Last 30 Days
-        // DONE
-// 2. calculate:  BP Average over given time period
-        // DONE
-
-// 3. chart + display:  BP, Pulse and Weight over given time period
