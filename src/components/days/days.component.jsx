@@ -25,7 +25,6 @@ const Days = ({ sevenDays }) => {
     useEffect(() => {
         const getDateFromToday = async () => {
             let result = await moment().subtract(numDays, 'days').format("M/D/YYYY");
-            console.log("RESULT::", result)
             setDateFromToday(result);
         }
         getDateFromToday();
@@ -58,8 +57,8 @@ const Days = ({ sevenDays }) => {
     }
 
     // Get averages results
-    const sysAvg = getSysAverage();
-    const diaAvg = getDiaAverage();
+    const sysAvg = Math.round(getSysAverage());
+    const diaAvg = Math.round(getDiaAverage());
 
     // Handle edit entry selection 
     const handleEditClick = entry => {
