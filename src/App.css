@@ -1,6 +1,5 @@
 body {
     font-family: 'Open Sans Condensed';
-    padding: 20px 0;
 }
 
 a {
@@ -14,4 +13,11 @@ a {
 
 .App {
   text-align: center;
+}
+
+/* Medium devices 768px and up */
+@media only screen and (min-width: 768px) {
+    body {
+        padding: 20px 0;
+    }
 }

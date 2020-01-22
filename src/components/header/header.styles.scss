@@ -3,14 +3,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 0;
 
   .options {
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: center;   
 
     .option {
+      margin: 0 12px;
       padding: 10px 10px;
       cursor: pointer;
       font-weight: 500;
