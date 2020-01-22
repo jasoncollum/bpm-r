@@ -80,7 +80,7 @@ const App = () => {
           <Route path='/days/'
             render={(props) =>
               currentUser ? (
-                <Days sevenDays={props.location.state.sevenDays} entries={entries} />
+                <Days sevenDays={props.location.state.sevenDays} />
               ) : (
                   <Redirect to='/signin' />
                 )}
