@@ -7,6 +7,7 @@ import HomePage from './pages/homepage/homepage.component';
 import Entries from './components/entries/entries.component';
 import Days from './components/days/days.component';
 import NewEntryForm from './components/new-entry-form/new-entry-form.component';
+import EditEntryForm from './components/edit-entry-form/edit-entry-form.component';
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
 
@@ -92,6 +93,18 @@ const App = () => {
               ) : (
                   <Redirect to='/signin' />
                 )}
+          />
+          <Route exact path='/editentryform/:id'
+            render={(props) => {
+              if (currentUser) {
+                let entry = entries.find(entry =>
+                  entry.id === props.match.params.id)
+                return < EditEntryForm entry={entry} />
+              } else {
+                return <Redirect to='/signin' />
+              }
+            }
+            }
           />
           <Route
             exact path='/signin'

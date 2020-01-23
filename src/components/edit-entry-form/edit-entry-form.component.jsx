@@ -1,4 +1,5 @@
 import React, { useReducer, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -7,6 +8,7 @@ import { Button } from 'reactstrap';
 import BpmContext from '../../contexts/bpm.context';
 import { firestore } from '../../firebase/firebase.utils';
 
+import '../new-entry-form/new-entry-form.styles.scss';
 import './edit-entry-form.styles.scss';
 
 const reducer = (state, action) => {
@@ -31,9 +33,10 @@ const reducer = (state, action) => {
     }
 }
 
-const EditEntryForm = ({ entry, toggleModal }) => {
+const EditEntryForm = ({ entry }) => {
     const { currentUser, fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, entry);
+    const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +54,7 @@ const EditEntryForm = ({ entry, toggleModal }) => {
             });
 
             fetchEntries();
-            toggleModal();
+            history.push('/entries');
         } catch (error) {
             console.error('Error writing document...', error);
         }
@@ -66,7 +69,7 @@ const EditEntryForm = ({ entry, toggleModal }) => {
             await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).delete();
 
             fetchEntries();
-            toggleModal();
+            history.push('/entries');
         } catch (error) {
             console.error('Error deleting document...', error);
         }
@@ -76,9 +79,15 @@ const EditEntryForm = ({ entry, toggleModal }) => {
         const { name, value } = e.target;
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
+
     return (
         <div className='edit-entry-form-container'>
-            <p>{state.date}</p>
+            <div className="date-and-cancel-div">
+                <span className='edit-entry-form-date-display'>{state.date}</span>
+                <Link to='/entries' className='edit-entry-form-cancel-icon'>
+                    <i className="fas fa-times"></i>
+                </Link>
+            </div>
             <form className='edit-entry-form' onSubmit={handleSubmit}>
                 <EditFormInput
                     type='number'
