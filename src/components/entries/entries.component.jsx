@@ -1,22 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import useToggle from '../../hooks/useToggle';
-import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
+import { Table } from 'reactstrap';
+
 
 
 import BpmContext from '../../contexts/bpm.context';
 import './entries.styles.scss';
 
 const Entries = () => {
-    const [entryToEdit, setEntryToEdit] = useState(null);
-    const [modal, toggleModal] = useToggle(false);
     const { entries } = useContext(BpmContext);
-
-    const handleEditClick = entry => {
-        setEntryToEdit(entry);
-        toggleModal();
-    }
 
     return (
         <div className="entries-container">
@@ -39,9 +32,11 @@ const Entries = () => {
                                     <td>{entry.systolic}/{entry.diastolic}</td>
                                     <td>{entry.pulse}</td>
                                     <td>{entry.weight}</td>
-                                    <td><button className='icon-btn' onClick={() => handleEditClick(entry)}>
-                                        <i className='fas fa-pencil-alt pencil-icon'></i>
-                                    </button>
+                                    <td>
+                                        <Link className='icon-btn'
+                                            to={`/editentryform/${entry.id}`}>
+                                            <i className='fas fa-pencil-alt pencil-icon'></i>
+                                        </Link>
                                     </td>
                                 </tr>
                                 <tr>
@@ -55,16 +50,6 @@ const Entries = () => {
 
                 </tbody>
             </Table>
-            <Modal isOpen={modal} toggle={toggleModal}>
-                <ModalHeader toggle={toggleModal}>Edit bpm entry...</ModalHeader>
-                <ModalBody>
-                    <EditEntryForm
-                        entry={entryToEdit}
-                        toggleModal={toggleModal}
-                    />
-                </ModalBody>
-                <ModalFooter></ModalFooter>
-            </Modal>
         </div>
     )
 }

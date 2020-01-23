@@ -1,15 +1,32 @@
-.edit-entry-form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.edit-entry-form-container {
+  display: flex;
+    flex-direction: column;
     width: 300px;
+    justify-content: center;
     margin: 0 auto;
+}
+
+.date-and-cancel-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-entry-form-date-display {
+  margin: 0;
+}
+
+.edit-entry-form-cancel-icon {
+  color: lightgrey;
+
+  &:hover {
+    color: grey;
+  }
 }
 
 .edit-entry-form-textarea {
     width: 100%;
     padding: 10px;
-    margin: 25px 0 45px 0;
+    margin: 15px 0 35px 0;
     border: 1px solid grey;
 
     &:focus {

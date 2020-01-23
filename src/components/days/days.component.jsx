@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import useToggle from '../../hooks/useToggle';
-import EditEntryForm from '../edit-entry-form/edit-entry-form.component';
-import Header from '../header/header.component';
+import { Table } from 'reactstrap';
 
 import BpmContext from '../../contexts/bpm.context';
 
@@ -13,16 +11,10 @@ import './days.styles.scss';
 
 const Days = ({ days }) => {
     const { entries } = useContext(BpmContext);
-    const [entryToEdit, setEntryToEdit] = useState(null);
-    const [modal, toggleModal] = useToggle(false);
-
     const [prevDays, setPrevDays] = useState(days);
     const [numDays, setNumDays] = useState(days);
     const [filteredEntries, setFilteredEntries] = useState([]);
     const [dateFromToday, setDateFromToday] = useState(null);
-
-    console.log("SEVEN_DAYS::", days)
-    console.log("NUM_DAYS::", numDays)
 
     // Calculate date from today
     useEffect(() => {
@@ -69,12 +61,6 @@ const Days = ({ days }) => {
     const sysAvg = Math.round(getSysAverage());
     const diaAvg = Math.round(getDiaAverage());
 
-    // Handle edit entry selection 
-    const handleEditClick = entry => {
-        setEntryToEdit(entry);
-        toggleModal();
-    }
-
     return (
         <div className="entries-container">
             {
@@ -102,9 +88,11 @@ const Days = ({ days }) => {
                                     <td>{entry.systolic}/{entry.diastolic}</td>
                                     <td>{entry.pulse}</td>
                                     <td>{entry.weight}</td>
-                                    <td><button className='icon-btn' onClick={() => handleEditClick(entry)}>
-                                        <i className='fas fa-pencil-alt pencil-icon'></i>
-                                    </button>
+                                    <td>
+                                        <Link className='icon-btn'
+                                            to={`/editentryform/${entry.id}`}>
+                                            <i className='fas fa-pencil-alt pencil-icon'></i>
+                                        </Link>
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,19 +103,8 @@ const Days = ({ days }) => {
                             </React.Fragment>
                         ))
                     }
-
                 </tbody>
             </Table>
-            <Modal isOpen={modal} toggle={toggleModal}>
-                <ModalHeader toggle={toggleModal}>Edit bpm entry...</ModalHeader>
-                <ModalBody>
-                    <EditEntryForm
-                        entry={entryToEdit}
-                        toggleModal={toggleModal}
-                    />
-                </ModalBody>
-                <ModalFooter></ModalFooter>
-            </Modal>
         </div>
     );
 };
