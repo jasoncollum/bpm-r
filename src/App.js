@@ -19,7 +19,7 @@ import './App.css';
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState(null);
 
   // Auth Listener
   useEffect(() => {
@@ -78,12 +78,12 @@ const App = () => {
                   <Redirect to='/signin' />
                 )}
           />
-          <Route path='/days/'
+          <Route exact path='/days'
             render={(props) =>
-              currentUser ? (
+              props.location.state ? (
                 <Days days={props.location.state.days} />
               ) : (
-                  <Redirect to='/signin' />
+                  <Redirect to='/entries' />
                 )}
           />
           <Route exact path='/newentryform'
