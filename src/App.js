@@ -52,13 +52,17 @@ const App = () => {
   };
 
   const fetchEntries = async () => {
-    const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
-      .orderBy("date", "desc")
-      .get();
-    setEntries(snapshot.docs.map(doc => {
-      let data = doc.data()
-      return { ...data, id: doc.id }
-    }));
+    try {
+      const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
+        .orderBy("date", "desc")
+        .get();
+      setEntries(snapshot.docs.map(doc => {
+        let data = doc.data()
+        return { ...data, id: doc.id }
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
