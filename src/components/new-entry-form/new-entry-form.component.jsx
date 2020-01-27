@@ -1,9 +1,10 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import ErrorMessage from '../error-message/error-message.component';
 
 import BpmContext from '../../contexts/bpm.context';
 import { firestore } from '../../firebase/firebase.utils';
@@ -46,6 +47,7 @@ const reducer = (state, action) => {
 const NewEntryForm = () => {
     const { currentUser, fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [hasError, setHasError] = useState(false);
     const history = useHistory();
 
     const handleSubmit = async (e) => {
@@ -60,7 +62,7 @@ const NewEntryForm = () => {
             fetchEntries();
             history.push('/entries');
         } catch (error) {
-            console.error('Error writing document...', error);
+            setHasError(true);
         }
     }
 
@@ -72,6 +74,7 @@ const NewEntryForm = () => {
 
     return (
         <div className='new-entry-form'>
+            {hasError && <ErrorMessage message='Unable to save bpm entry' />}
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <FormInput
                     type='number'

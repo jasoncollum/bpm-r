@@ -1,8 +1,9 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import ErrorMessage from '../error-message/error-message.component';
 import { Button } from 'reactstrap';
 
 import BpmContext from '../../contexts/bpm.context';
@@ -36,6 +37,8 @@ const reducer = (state, action) => {
 const EditEntryForm = ({ entry }) => {
     const { currentUser, fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, entry);
+    const [hasError, setHasError] = useState(false);
+    const [message, setMessage] = useState('');
     const history = useHistory();
 
     const handleSubmit = async (e) => {
@@ -56,7 +59,8 @@ const EditEntryForm = ({ entry }) => {
             fetchEntries();
             history.push('/entries');
         } catch (error) {
-            console.error('Error writing document...', error);
+            setMessage('Unable to save edited entry');
+            setHasError(true);
         }
     }
 
@@ -71,7 +75,8 @@ const EditEntryForm = ({ entry }) => {
             fetchEntries();
             history.push('/entries');
         } catch (error) {
-            console.error('Error deleting document...', error);
+            setMessage('Unable to delete entry');
+            setHasError(true);
         }
     }
 
@@ -82,6 +87,7 @@ const EditEntryForm = ({ entry }) => {
 
     return (
         <div className='edit-entry-form-container'>
+            {hasError && <ErrorMessage message={message} />}
             <div className="date-and-cancel-div">
                 <span className='edit-entry-form-date-display'>{state.date}</span>
                 <Link to='/entries' className='edit-entry-form-cancel-icon'>
