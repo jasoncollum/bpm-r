@@ -10,6 +10,7 @@ import NewEntryForm from './components/new-entry-form/new-entry-form.component';
 import EditEntryForm from './components/edit-entry-form/edit-entry-form.component';
 import SignIn from './components/sign-in/sign-in.component';
 import SignUp from './components/sign-up/sign-up.component';
+import ErrorMessage from './components/error-message/error-message.component';
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 
@@ -20,6 +21,7 @@ import './App.css';
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [entries, setEntries] = useState(null);
+  const [hasError, setHasError] = useState(false);
 
   // Auth Listener
   useEffect(() => {
@@ -37,7 +39,7 @@ const App = () => {
         });
       }
     });
-  }, []);
+  });
 
   // Get Entries
   useEffect(() => {
@@ -61,7 +63,7 @@ const App = () => {
         return { ...data, id: doc.id }
       }));
     } catch (error) {
-      console.log(error);
+      setHasError(true);
     }
   };
 
@@ -69,6 +71,7 @@ const App = () => {
     <div className="App" >
       <BpmContext.Provider value={{ currentUser, entries, fetchEntries }}>
         <Header entries={entries} />
+        {hasError && <ErrorMessage message='Unable to fetch bpm entries' />}
 
         <Switch>
           <Route exact path='/'
