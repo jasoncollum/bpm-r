@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import ErrorMessage from '../error-message/error-message.component';
 
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
@@ -37,6 +38,8 @@ const reducer = (state, action) => {
 
 const SignUp = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [hasError, setHasError] = useState(false);
+    const [message, setMessage] = useState('');
     const history = useHistory();
 
     const { displayName } = state;
@@ -44,7 +47,8 @@ const SignUp = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         if (state.password !== state.confirmPassword) {
-            alert("Passwords don't match");
+            setMessage("Passwords don't match");
+            setHasError(true);
             return;
         }
 
@@ -58,18 +62,24 @@ const SignUp = () => {
             history.push('/');
 
         } catch (error) {
-            console.error(error);
+            if (error.code === 'auth/email-already-in-use') {
+                setMessage('Email address is already being used');
+            }
+            else {
+                setMessage('Unable to sign in');
+            }
+            setHasError(true);
         }
     }
 
     const handleChange = e => {
         const { name, value } = e.target;
-        console.log("DISPLAY_NAME::", displayName)
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     return (
         <div className='sign-up'>
+            {hasError && <ErrorMessage message={message} />}
             <span>Sign up with your email and password</span>
             <form className='sign-up-form' onSubmit={handleSubmit}>
                 <FormInput

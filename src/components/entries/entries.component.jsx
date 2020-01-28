@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { Table } from 'reactstrap';
 
-
-
 import BpmContext from '../../contexts/bpm.context';
 import './entries.styles.scss';
 

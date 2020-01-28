@@ -10,7 +10,6 @@ import '../entries/entries.styles.scss';
 import './days.styles.scss';
 
 const Days = ({ days }) => {
-
     const { entries } = useContext(BpmContext);
     const [prevDays, setPrevDays] = useState(days);
     const [numDays, setNumDays] = useState(days);
@@ -20,7 +19,6 @@ const Days = ({ days }) => {
 
     // Push to Entries if days is undefined
     useEffect(() => {
-        console.log("DAYS::", days)
         if (!days) {
             history.push('/entries')
         }

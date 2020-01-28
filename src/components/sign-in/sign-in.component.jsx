@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import ErrorMessage from '../error-message/error-message.component';
 
 import { auth } from '../../firebase/firebase.utils';
 
@@ -29,6 +30,8 @@ const reducer = (state, action) => {
 
 const SignIn = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [hasError, setHasError] = useState(false);
+    const [message, setMessage] = useState('');
     const history = useHistory();
 
     const handleSubmit = async e => {
@@ -38,18 +41,27 @@ const SignIn = () => {
             await auth.signInWithEmailAndPassword(state.email, state.password);
             history.push('/');
         } catch (error) {
-            console.log(error);
+            if (error.code === 'auth/user-not-found') {
+                setMessage('Email address not found');
+            }
+            else if (error.code === 'auth/wrong-password') {
+                setMessage('Incorrect password');
+            }
+            else {
+                setMessage('Unable to sign in');
+            }
+            setHasError(true);
         }
     };
 
     const handleChange = e => {
         const { name, value } = e.target;
-
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     return (
         <div className='sign-in'>
+            {hasError && <ErrorMessage message={message} />}
             <span>Log in with your email and password</span>
 
             <form onSubmit={handleSubmit}>
