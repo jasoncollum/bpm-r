@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 
 import { Table } from 'reactstrap';
 
+import Loader from '../loader/loader.component';
+
 import BpmContext from '../../contexts/bpm.context';
 import './entries.styles.scss';
 
-const Entries = () => {
+const Entries = ({ isLoading }) => {
     const { entries } = useContext(BpmContext);
 
-    if (entries) {
+    if (!isLoading && entries) {
         return (
             <div className="entries-container">
                 {!entries.length ? (
@@ -58,7 +60,11 @@ const Entries = () => {
             </div>
         )
     } else {
-        return null;
+        return (
+            <div className='homepage'>
+                <Loader />
+            </div>
+        )
     }
 }
 
