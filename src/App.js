@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
+import Loadable from 'react-loadable';
+
 import Header from './components/header/header.component';
 
 import HomePage from './pages/homepage/homepage.component';
@@ -21,6 +23,7 @@ import './App.css';
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [entries, setEntries] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   // Auth Listener
@@ -39,7 +42,7 @@ const App = () => {
         });
       }
     });
-  });
+  }, []);
 
   // Get Entries
   useEffect(() => {
@@ -55,6 +58,7 @@ const App = () => {
 
   const fetchEntries = async () => {
     try {
+      setIsLoading(true)
       const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
         .orderBy("date", "desc")
         .get();
@@ -62,6 +66,7 @@ const App = () => {
         let data = doc.data()
         return { ...data, id: doc.id }
       }));
+      setIsLoading(false);
     } catch (error) {
       setHasError(true);
     }
@@ -75,12 +80,12 @@ const App = () => {
 
         <Switch>
           <Route exact path='/'
-            render={() => <HomePage signUserOut={signUserOut} />}
+            render={() => <HomePage signUserOut={signUserOut} isLoading={isLoading} />}
           />
           <Route exact path='/entries'
             render={() =>
               currentUser ? (
-                <Entries />
+                <Entries isLoading={isLoading} />
               ) : (
                   <Redirect to='/signin' />
                 )}
