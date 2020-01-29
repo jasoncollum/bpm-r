@@ -28,7 +28,6 @@ const Days = ({ days }) => {
     useEffect(() => {
         const getDateFromToday = async () => {
             let result = await moment().subtract(numDays, 'days');
-            // .format("M/D/YYYY");
             setDateFromToday(result);
         }
         getDateFromToday();
