@@ -52,7 +52,7 @@ const NewEntryForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let date = moment().format("M/D/YYYY LT");
+        let date = moment().format();
         try {
             await firestore.collection(`users/${currentUser.id}/entries`)
                 .add({

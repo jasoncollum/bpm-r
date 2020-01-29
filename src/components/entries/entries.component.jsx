@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import moment from 'moment';
+
 import { Table } from 'reactstrap';
 
 import Loader from '../loader/loader.component';
@@ -35,7 +37,9 @@ const Entries = ({ isLoading }) => {
                                     entries.map(entry => (
                                         <React.Fragment key={entry.id}>
                                             <tr>
-                                                <td>{entry.date}</td>
+                                                <td>{
+                                                    moment(entry.date).format('M/D/YYYY LT')
+                                                }</td>
                                                 <td>{entry.systolic}/{entry.diastolic}</td>
                                                 <td>{entry.pulse}</td>
                                                 <td>{entry.weight}</td>

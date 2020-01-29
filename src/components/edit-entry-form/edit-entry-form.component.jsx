@@ -1,6 +1,8 @@
 import React, { useReducer, useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
+import moment from 'moment';
+
 import EditFormInput from '../edit-form-input/edit-form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import ErrorMessage from '../error-message/error-message.component';
@@ -89,7 +91,9 @@ const EditEntryForm = ({ entry }) => {
         <div className='edit-entry-form-container'>
             {hasError && <ErrorMessage message={message} />}
             <div className="date-and-cancel-div">
-                <span className='edit-entry-form-date-display'>{state.date}</span>
+                <span className='edit-entry-form-date-display'>
+                    {moment(state.date).format('M/D/YYYY LT')}
+                </span>
                 <Link to='/entries' className='edit-entry-form-cancel-icon'>
                     <i className="fas fa-times"></i>
                 </Link>

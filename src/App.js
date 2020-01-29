@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Loadable from 'react-loadable';
-
 import Header from './components/header/header.component';
 
 import HomePage from './pages/homepage/homepage.component';

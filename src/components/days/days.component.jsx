@@ -14,7 +14,7 @@ const Days = ({ days }) => {
     const [prevDays, setPrevDays] = useState(days);
     const [numDays, setNumDays] = useState(days);
     const [filteredEntries, setFilteredEntries] = useState([]);
-    const [dateFromToday, setDateFromToday] = useState(null);
+    const [dateFromToday, setDateFromToday] = useState('');
     const history = useHistory();
 
     // Push to Entries if days is undefined
@@ -27,7 +27,7 @@ const Days = ({ days }) => {
     // Calculate date from today
     useEffect(() => {
         const getDateFromToday = async () => {
-            let result = await moment().subtract(numDays, 'days').format("M/D/YYYY");
+            let result = await moment().subtract(numDays, 'days');
             setDateFromToday(result);
         }
         getDateFromToday();
@@ -78,9 +78,9 @@ const Days = ({ days }) => {
             <div className="entries-container">
                 {
                     (days === 7) ?
-                        <h5 className='bp-average-message'>7 Day BP Average:  {sysAvg}/{diaAvg}</h5>
+                        <h5 className='bp-average-message'>7 Day BP Average:  {sysAvg} / {diaAvg}</h5>
                         :
-                        <h5 className='bp-average-message'>30 Day BP Average:  {sysAvg}/{diaAvg}</h5>
+                        <h5 className='bp-average-message'>30 Day BP Average:  {sysAvg} / {diaAvg}</h5>
                 }
                 <Table className='table'>
                     <thead>
@@ -97,7 +97,9 @@ const Days = ({ days }) => {
                             filteredEntries.map(entry => (
                                 <React.Fragment key={entry.id}>
                                     <tr>
-                                        <td>{entry.date}</td>
+                                        <td>{
+                                            moment(entry.date).format('M/D/YYYY LT')
+                                        }</td>
                                         <td>{entry.systolic}/{entry.diastolic}</td>
                                         <td>{entry.pulse}</td>
                                         <td>{entry.weight}</td>
