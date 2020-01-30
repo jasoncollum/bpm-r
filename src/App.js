@@ -59,7 +59,7 @@ const App = () => {
       setIsLoading(true)
       const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
         .orderBy("date", "desc")
-      // .get();
+        .get();
       setEntries(snapshot.docs.map(doc => {
         let data = doc.data()
         return { ...data, id: doc.id }
