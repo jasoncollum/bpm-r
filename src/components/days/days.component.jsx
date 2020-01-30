@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+
 import moment from 'moment';
+import { motion } from 'framer-motion';
 
 import { Table } from 'reactstrap';
 
 import BpmContext from '../../contexts/bpm.context';
 
-import '../entries/entries.styles.scss';
 import './days.styles.scss';
 
 const Days = ({ days }) => {
@@ -75,12 +76,23 @@ const Days = ({ days }) => {
 
     if (filteredEntries.length) {
         return (
-            <div className="entries-container">
+            <motion.div className="days-container"
+                animate={{ y: 10 }} transition={{ duration: 0.5 }}>
                 {
                     (days === 7) ?
-                        <h5 className='bp-average-message'>7 Day BP Average:  {sysAvg} / {diaAvg}</h5>
+                        <motion.h5
+                            className='bp-average-message'
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >7 Day BP Average:  {sysAvg} / {diaAvg}</motion.h5>
                         :
-                        <h5 className='bp-average-message'>30 Day BP Average:  {sysAvg} / {diaAvg}</h5>
+                        <motion.h5
+                            className='bp-average-message'
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >30 Day BP Average:  {sysAvg} / {diaAvg}</motion.h5>
                 }
                 <Table className='table'>
                     <thead>
@@ -120,13 +132,19 @@ const Days = ({ days }) => {
                         }
                     </tbody>
                 </Table>
-            </div>
+            </motion.div>
         );
     } else {
         return (
             <div className="entries-container">
                 <div className='no-entries-message'>
-                    <h4>There have been no bpm entries in the last {numDays} days</h4>
+                    <motion.h4
+                        initial={{ opacity: 0 }}
+                        animate={{ y: 25, opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        There are no bpm entries in the last {numDays} days
+                        </motion.h4>
                 </div>
             </div>
         )

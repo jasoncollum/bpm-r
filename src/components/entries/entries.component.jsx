@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import moment from 'moment';
+import { motion } from 'framer-motion';
 
 import { Table } from 'reactstrap';
 
@@ -15,7 +16,9 @@ const Entries = ({ isLoading }) => {
 
     if (!isLoading && entries) {
         return (
-            <div className="entries-container">
+            <motion.div className="entries-container"
+                animate={{ y: -25 }} transition={{ duration: 0.5 }}
+            >
                 {!entries.length ? (
                     <div className='no-entries-message'>
                         <h3>You currently have no bpm entries</h3>
@@ -61,7 +64,7 @@ const Entries = ({ isLoading }) => {
                             </tbody>
                         </Table>
                     )}
-            </div>
+            </motion.div>
         )
     } else {
         return (

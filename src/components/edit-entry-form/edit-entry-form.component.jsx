@@ -142,7 +142,6 @@ const EditEntryForm = ({ entry }) => {
                 </textarea>
                 <div className='edit-entry-form-buttons-container'>
                     <Button
-                        outline color="danger"
                         className='edit-entry-form-delete-button'
                         onClick={handleDelete}
                     > DELETE ENTRY </Button>

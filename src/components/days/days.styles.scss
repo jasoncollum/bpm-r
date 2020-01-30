@@ -1,3 +1,50 @@
+.days-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+}
+
 .bp-average-message {
     color: #02B875;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.no-entries-message {
+    color: #02B875;
+    margin-top: 50px;
+}
+
+// Entries Table
+.table {
+    text-align: left;
+    align-self: center; 
+}
+
+.table-note {
+    color: grey;
+    border-top: none !important;
+    padding-top: 0px !important;
+}
+
+.icon-btn {
+    border: none;
+    background-color: white;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.pencil-icon {
+    color: #f0ad4e;
+}
+
+// Media Queries
+@media (min-width: 576px) {
+    .table {
+        max-width: 500px;
+        margin: 0 20%;
+    }
 }

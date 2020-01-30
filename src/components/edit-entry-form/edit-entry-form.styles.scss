@@ -35,7 +35,7 @@
 }
 
 .edit-entry-form-buttons-container {
-    display: flex;
+  display: flex;
 }
 
 .edit-entry-form-delete-button {
@@ -45,7 +45,25 @@
   font-size: 15px;
   font-family: 'Open Sans Condensed';
   font-weight: bolder;
+  background-color: white;
+  color: #d9534f;
+  border: 1px solid #d9534f;
   border-radius: 0;
+
+  &:focus {
+    outline: none !important;
+    outline-offset: none !important;
+  }
+
+  &:hover {
+    background-color: #d9534f;
+    border: none;
+    color: white;
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
 }
 
 
