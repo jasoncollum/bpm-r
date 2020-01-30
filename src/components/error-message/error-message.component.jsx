@@ -7,7 +7,9 @@ const ErrorMessage = ({ message }) => {
     return (
         <motion.div
             className='error-message'
-            animate={{ y: 5 }} transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ y: 5, opacity: 1 }}
+            transition={{ duration: 0.5 }}
         >
             {message}
         </motion.div>

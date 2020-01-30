@@ -80,13 +80,19 @@ const Days = ({ days }) => {
                 animate={{ y: 10 }} transition={{ duration: 0.5 }}>
                 {
                     (days === 7) ?
-                        <h5
+                        <motion.h5
                             className='bp-average-message'
-                        >7 Day BP Average:  {sysAvg} / {diaAvg}</h5>
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >7 Day BP Average:  {sysAvg} / {diaAvg}</motion.h5>
                         :
-                        <h5
+                        <motion.h5
                             className='bp-average-message'
-                        >30 Day BP Average:  {sysAvg} / {diaAvg}</h5>
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5 }}
+                        >30 Day BP Average:  {sysAvg} / {diaAvg}</motion.h5>
                 }
                 <Table className='table'>
                     <thead>
@@ -132,7 +138,11 @@ const Days = ({ days }) => {
         return (
             <div className="entries-container">
                 <div className='no-entries-message'>
-                    <motion.h4 animate={{ y: 25 }} transition={{ duration: 0.5 }}>
+                    <motion.h4
+                        initial={{ opacity: 0 }}
+                        animate={{ y: 25, opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                    >
                         There are no bpm entries in the last {numDays} days
                         </motion.h4>
                 </div>
