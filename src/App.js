@@ -30,14 +30,13 @@ const App = () => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser(
-            {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
-          )
-        });
+        const snapShot = await userRef.get()
+        setCurrentUser(
+          {
+            id: snapShot.id,
+            ...snapShot.data()
+          }
+        )
       }
     });
   }, []);
@@ -61,6 +60,7 @@ const App = () => {
         .where("userId", "==", currentUser.id)
         .orderBy("date", "desc")
         .get();
+
       setEntries(snapshot.docs.map(doc => {
         let data = doc.data()
         return { ...data, id: doc.id }
