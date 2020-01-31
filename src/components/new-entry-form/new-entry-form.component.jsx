@@ -16,7 +16,8 @@ const initialState = {
     diastolic: '',
     pulse: '',
     weight: '',
-    notes: ''
+    notes: '',
+    userId: ''
 };
 
 const reducer = (state, action) => {
@@ -54,9 +55,10 @@ const NewEntryForm = () => {
         e.preventDefault();
         let date = moment().format();
         try {
-            await firestore.collection(`users/${currentUser.id}/entries`)
+            await firestore.collection('entries')
                 .add({
                     ...state,
+                    userId: currentUser.id,
                     date
                 })
             fetchEntries();

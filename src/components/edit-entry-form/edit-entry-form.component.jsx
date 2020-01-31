@@ -37,7 +37,7 @@ const reducer = (state, action) => {
 }
 
 const EditEntryForm = ({ entry }) => {
-    const { currentUser, fetchEntries } = useContext(BpmContext);
+    const { fetchEntries } = useContext(BpmContext);
     const [state, dispatch] = useReducer(reducer, entry);
     const [hasError, setHasError] = useState(false);
     const [message, setMessage] = useState('');
@@ -47,14 +47,15 @@ const EditEntryForm = ({ entry }) => {
         e.preventDefault();
 
         try {
-            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+            const entryRef = await firestore.collection('entries').doc(entry.id);
 
-            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).set({
+            await firestore.collection('entries').doc(entryRef.id).set({
                 date: state.date,
                 systolic: state.systolic,
                 diastolic: state.diastolic,
                 pulse: state.pulse,
                 weight: state.weight,
+                userId: state.userId,
                 notes: state.notes
             });
 
@@ -70,9 +71,9 @@ const EditEntryForm = ({ entry }) => {
         e.preventDefault()
 
         try {
-            const entryRef = await firestore.collection(`users/${currentUser.id}/entries`).doc(entry.id);
+            const entryRef = await firestore.collection('entries').doc(entry.id);
 
-            await firestore.collection(`users/${currentUser.id}/entries`).doc(entryRef.id).delete();
+            await firestore.collection('entries').doc(entryRef.id).delete();
 
             fetchEntries();
             history.push('/entries');
