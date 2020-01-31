@@ -57,7 +57,8 @@ const App = () => {
   const fetchEntries = async () => {
     try {
       setIsLoading(true)
-      const snapshot = await firestore.collection(`users/${currentUser.id}/entries`)
+      const snapshot = await firestore.collection('entries')
+        .where("userId", "==", currentUser.id)
         .orderBy("date", "desc")
         .get();
       setEntries(snapshot.docs.map(doc => {
@@ -66,6 +67,7 @@ const App = () => {
       }));
       setIsLoading(false);
     } catch (error) {
+      console.log(error)
       setHasError(true);
     }
   };
