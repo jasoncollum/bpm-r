@@ -28,6 +28,10 @@
     padding: 10px;
     margin: 15px 0 35px 0;
     border: 1px solid grey;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 
     &:focus {
       outline: none;

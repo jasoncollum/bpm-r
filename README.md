@@ -9,7 +9,7 @@
 - Firebase Authentication
 - Cloud Firestore Database
 - MomentJS
-- Framer Motion
+- Motion
 - Reactstrap
 - Bootstrap
 
@@ -17,3 +17,5 @@
 Visit...
 User: Guest
 Password: GuestPassword
+
+## Thanks for checking out bpm!
