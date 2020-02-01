@@ -15,7 +15,7 @@
 
 ## bpm is hosted via Firebase hosting... 
 Visit...
-User: Guest
+Email: guest@email.com
 Password: GuestPassword
 
 ## Thanks for checking out bpm!
