@@ -91,7 +91,7 @@ const App = () => {
           />
           <Route exact path='/days'
             render={(props) =>
-              props.location.state ? (
+              currentUser && props.location.state ? (
                 <Days days={props.location.state.days} />
               ) : (
                   <Redirect to='/entries' />
