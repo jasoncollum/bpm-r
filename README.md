@@ -1,8 +1,8 @@
 # bpm
 
-// ![](bpm-demo.gif) goes here...
+![](bpm-demo.mov)
 
-## bpm is a React app with Firebase utilities designed to help you monitor your blood pressure by logging systolic and diastolic numbers, pulse, weight and any additional notes you might want to add. You can also view entries from the last 7 or 30 days including an average blood pressure calculation for each term.
+## bpm is a React app with Firebase utilities designed to help you monitor your blood pressure by logging systolic and diastolic numbers, pulse, weight and any additional notes you might want to add. You can also choose to view entries from the last 7 or 30 days including an average blood pressure calculation for each term.
 
 ## Technologies Used:
 - React
