@@ -13,9 +13,4 @@
 - Reactstrap
 - Bootstrap
 
-## bpm is hosted via Firebase hosting... 
-https://bpm-r-979af.firebaseapp.com
-Email: guest@email.com
-Password: GuestPassword
-
 ## Thanks for checking out bpm!
